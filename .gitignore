@@ -48,3 +48,11 @@ Makefile.in
 # Debug files
 *.dSYM/
 
+Makefile
+config.*
+echogram.desktop
+src/.deps/
+src/Makefile
+src/*.c
+src/*.stamp
+src/echogram
