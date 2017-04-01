@@ -1,6 +1,7 @@
 /*
  *  This file is part of Echogram, a Gtk+ echogram viewer application.
- *  Copyright (C) 2016 Igor Goryachev <igor@goryachev.org>
+ *
+ *  Copyright (C) 2017 Igor Goryachev <igor@goryachev.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +21,7 @@
 public class Header : Object {
 	private DataInputStream data_stream;
 
-	private static const uint8 size = 8;
+	private const uint8 size = 8;
 
 	private uint8[] header;
 

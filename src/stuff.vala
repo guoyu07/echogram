@@ -1,6 +1,7 @@
 /*
  *  This file is part of Echogram, a Gtk+ echogram viewer application.
- *  Copyright (C) 2016 Igor Goryachev <igor@goryachev.org>
+ *
+ *  Copyright (C) 2017 Igor Goryachev <igor@goryachev.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,10 +18,10 @@
  *
  */
 
-public static const float RAD_CONVERSION = 180 / (float)Math.PI;
-public static const float EARTH_RADIUS = (float)6356752.3142;
-public static const float METERS_IN_FOOT = (float)0.3048;
-public static const float KMPH_IN_KNOT = (float)1.852;
+public const float RAD_CONVERSION = 180 / (float)Math.PI;
+public const float EARTH_RADIUS = (float)6356752.3142;
+public const float METERS_IN_FOOT = (float)0.3048;
+public const float KMPH_IN_KNOT = (float)1.852;
 
 public static float feet_to_meters(float feet) {
 	return feet * METERS_IN_FOOT;

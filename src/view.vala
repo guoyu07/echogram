@@ -1,6 +1,7 @@
 /*
  *  This file is part of Echogram, a Gtk+ echogram viewer application.
- *  Copyright (C) 2016 Igor Goryachev <igor@goryachev.org>
+ *
+ *  Copyright (C) 2017 Igor Goryachev <igor@goryachev.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,33 +29,35 @@ public class View : Gtk.Image {
 
 	public Orientation orientation;
 
-	public Gdk.Pixbuf pixbuf;
+	public Gdk.Pixbuf pb;
 
 	public int position;
 
 	public View(SonarLog sonar_log, Channel channel, int width, int height, Orientation orientation) {
 		Object();
+
 		this.sonar_log = sonar_log;
 		this.channel = channel;
 		this.width = width;
 		this.height = height;
 		this.orientation = orientation;
-		pixbuf = new Gdk.Pixbuf(Gdk.Colorspace.RGB, false, 8, width, height);
+
+		pb = new Gdk.Pixbuf(Gdk.Colorspace.RGB, false, 8, width, height);
 		position = 0;
 	}
 
 	public int get_offset(int x, int y) {
-		var offset = y * pixbuf.rowstride + x * pixbuf.n_channels;
+		var offset = y * pb.rowstride + x * pb.n_channels;
 
 		if (orientation == Orientation.VERTICAL) {
-			offset = x * pixbuf.rowstride + y * pixbuf.n_channels;
+			offset = x * pb.rowstride + y * pb.n_channels;
 		}
 
 		return offset;
 	}
 
 	public void set_pixel(int x, int y, uint8 r, uint8 g, uint8 b) {
-		uint8* dataPtr = pixbuf.get_pixels();
+		uint8* dataPtr = pb.get_pixels();
 
 		dataPtr += get_offset(x, y);
 
@@ -69,7 +72,7 @@ public class View : Gtk.Image {
 
 	public int[] shifts;
 
-	public void read() {
+	public void read() throws Error {
 		float upper_limit = 0;
 		float lower_limit = 0;
 
@@ -126,7 +129,7 @@ public class View : Gtk.Image {
 
 				for (var t = limit1.x; t < limit2.x; t++) {
 					if (upper_cur != 0) {
-					// if (orientation == Orientation.VERTICAL) {
+						// if (orientation == Orientation.VERTICAL) {
 						shifts[t] = (height - h) / 2;
 						heights[t] = h;
 						continue;
@@ -143,12 +146,12 @@ public class View : Gtk.Image {
 	}
 
 	public void render() {
-		Ping ping_first = pings[0];
-		Ping ping_last = pings[pings.length-1];
-		stderr.printf("channel: %s, first: %u, last: %u\n", channel.to_string(), ping_first.frame_index, ping_last.frame_index);
+		// Ping ping_first = pings[0];
+		// Ping ping_last = pings[pings.length-1];
+		// stderr.printf("channel: %s, first: %u, last: %u\n", channel.to_string(), ping_first.frame_index, ping_last.frame_index);
 
-		//pixbuf.fill(0xffffff);
-		pixbuf.fill(0);
+		// pb.fill(0xffffff);
+		pb.fill(0);
 
 		for (var x = 0; x < pings.length; x++) {
 			var ping = pings[x];
@@ -167,19 +170,23 @@ public class View : Gtk.Image {
 			}
 		}
 
-		set_from_pixbuf(pixbuf);
+		set_from_pixbuf(pb);
 	}
 
-	public void backward(int dec) {
+	public void backward(int dec) throws Error {
 		var min = 0;
+
 		position = position-dec > min ? position-dec : min;
+
 		read();
 		render();
 	}
 
-	public void forward(int inc) {
+	public void forward(int inc) throws Error {
 		var max = sonar_log.index.size(channel)-width;
+
 		position = position+inc < max ? position+inc : max;
+
 		read();
 		render();
 	}

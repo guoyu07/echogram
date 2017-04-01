@@ -1,6 +1,7 @@
 /*
  *  This file is part of Echogram, a Gtk+ echogram viewer application.
- *  Copyright (C) 2016 Igor Goryachev <igor@goryachev.org>
+ *
+ *  Copyright (C) 2017 Igor Goryachev <igor@goryachev.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +28,7 @@ public enum Channel {
 
 	public string to_string() {
 		switch (this) {
+
 		case PRIMARY:
 			return "primary";
 
