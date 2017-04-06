@@ -33,17 +33,26 @@ public class View : Gtk.Image {
 
 	public int position;
 
-	public View(SonarLog sonar_log, Channel channel, int width, int height, Orientation orientation) {
+	// public View(SonarLog sonar_log, Channel channel, int width, int height, Orientation orientation) {
+	public View(SonarLog sonar_log, Channel channel, Orientation orientation) {
 		Object();
 
 		this.sonar_log = sonar_log;
 		this.channel = channel;
-		this.width = width;
-		this.height = height;
 		this.orientation = orientation;
 
-		pb = new Gdk.Pixbuf(Gdk.Colorspace.RGB, false, 8, width, height);
+		// this.width = get_allocated_width ();
+		// this.height = get_allocated_height ();
+
+		// this.width = 100;
+		// this.height = 100;
+
+		// pb = new Gdk.Pixbuf(Gdk.Colorspace.RGB, false, 8, width, height);
 		position = 0;
+
+		// set_size_request (100, 100);
+
+		this.size_allocate.connect(this.on_size_allocate);
 	}
 
 	public int get_offset(int x, int y) {
@@ -146,6 +155,8 @@ public class View : Gtk.Image {
 	}
 
 	public void render() {
+		pb = new Gdk.Pixbuf(Gdk.Colorspace.RGB, false, 8, width, height);
+
 		// Ping ping_first = pings[0];
 		// Ping ping_last = pings[pings.length-1];
 		// stderr.printf("channel: %s, first: %u, last: %u\n", channel.to_string(), ping_first.frame_index, ping_last.frame_index);
@@ -178,14 +189,27 @@ public class View : Gtk.Image {
 
 		position = position-dec > min ? position-dec : min;
 
-		read();
-		render();
+		redraw();
 	}
 
 	public void forward(int inc) throws Error {
 		var max = sonar_log.index.size(channel)-width;
 
 		position = position+inc < max ? position+inc : max;
+
+		redraw();
+	}
+
+	public void redraw() {
+		read();
+		render();
+	}
+
+	private void on_size_allocate (Gtk.Allocation allocation) {
+		width = allocation.width;
+		height = allocation.height;
+
+		stdout.printf("|%d|%d|%d|\n", channel, width, height);
 
 		read();
 		render();
