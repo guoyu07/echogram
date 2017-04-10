@@ -35,7 +35,9 @@ public class View : Gtk.Image {
 
 	// public View(SonarLog sonar_log, Channel channel, int width, int height, Orientation orientation) {
 	public View(SonarLog sonar_log, Channel channel, Orientation orientation) {
-		Object();
+		// base();
+		//Object();
+		// new Gtk.Image();
 
 		this.sonar_log = sonar_log;
 		this.channel = channel;
@@ -44,8 +46,8 @@ public class View : Gtk.Image {
 		// this.width = get_allocated_width ();
 		// this.height = get_allocated_height ();
 
-		// this.width = 100;
-		// this.height = 100;
+		this.width = 100;
+		this.height = 100;
 
 		// pb = new Gdk.Pixbuf(Gdk.Colorspace.RGB, false, 8, width, height);
 		position = 0;
@@ -213,5 +215,33 @@ public class View : Gtk.Image {
 
 		read();
 		render();
+	}
+
+	public override void get_preferred_width (out int minimum,
+											  out int natural) {
+		base.get_preferred_height(out minimum, out natural);
+		// minimum = 0;
+		// natural = 0;
+
+		// if (this._child != null && this._child.get_visible ()) {
+		// 	this._child.get_preferred_width (out minimum, out natural);
+		// }
+	}
+
+	public override void get_preferred_height (out int minimum,
+											   out int natural) {
+		base.get_preferred_height(out minimum, out natural);
+		// minimum = 0;
+		// natural = 0;
+
+		// if (this._child != null && this._child.get_visible ()) {
+		// 	this._child.get_preferred_height (out minimum, out natural);
+		// }
+	}
+
+	public override bool draw (Cairo.Context cr) {
+		base.draw (cr);
+
+		return false;
 	}
 }

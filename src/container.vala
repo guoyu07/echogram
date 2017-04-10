@@ -51,13 +51,13 @@ public class Container : Gtk.Container {
 		// ph.add2(v2);
 		// pv.add2(v3);
 
-		// ph.pack1 (v1, false, true);
-		// ph.pack2 (v2, false, true);
-		// pv.pack2 (v3, false, true);
+		ph.pack1 (v1, false, true);
+		ph.pack2 (v2, false, true);
+		pv.pack2 (v3, false, true);
 
-		ph.pack1 (v1, true, true);
-		ph.pack2 (v2, true, true);
-		pv.pack2 (v3, true, true);
+		// ph.pack1 (v1, true, t);
+		// ph.pack2 (v2, true, false);
+		// pv.pack2 (v3, true, false);
 
 		pv.notify["position"].connect(position_changed_pv);
 		ph.notify["position"].connect(position_changed_ph);
