@@ -36,10 +36,10 @@ public class Container : Gtk.Container {
 		this._child = null;
 
 		pv = new Gtk.Paned (Gtk.Orientation.VERTICAL);
-		pv.set_wide_handle (true);
+		// pv.set_wide_handle (true);
 
 		ph = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
-		ph.set_wide_handle (true);
+		// ph.set_wide_handle (true);
 
 		pv.add1(ph);
 
